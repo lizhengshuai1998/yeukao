@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0 auto;
+			padding: 0;
+			list-style-type: none;
+		}
+		#wrap{
+			width: 700px;
+		}
+		#wrap p{
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+		.text{
+			height: 30px;
+			width: 700px;
+			margin-top: 10px;
+			border-radius: 5px;
+			border:1px solid #ccc;
+		}
+		.btn{
+			margin-left: 10px;
+			margin-top: 10px;
+			height: 30px;
+			width: 50px;
+			border: 0;
+			color: white;
+			border-radius: 5px;
+		}
+		#add{
+			background: #337DBD;
+		}
+		#rm{
+			background:#D8554D;
+		}
+		h2{
+			text-align: center;
+			margin-top: 10px;
+			color: #468CC8;
+		}
+		table{
+			width: 700px;
+
+		}
+		table tr td{
+			border: 1px solid #ccc;
+			text-align: center;
+			height: 30px;
+			color: #D75452;
+		}
+		tfoot tr td input{
+			float: right;
+			margin-right: 10px;
+			height: 30px;
+			width: 70px;
+			border-radius: 3px;
+			color: white;
+			background: #D75452;
+			border: 0;
+		}
+		thead tr td{
+			border-right: 0;
+			font-weight: bold;
+		}
+		thead tr td:last-child,tbody tr td:last-child{
+			border-right: 1px solid #ccc;
+		}
+		tbody tr td input{
+			height: 30px;
+			width: 70px;
+			color: white;
+			background: #468CC8;
+			border: 0;
+			border-radius: 5px;
+		}
+		tbody tr td{
+			border-top: 0;
+			border-right: 0;
+			height: 40px;
+			color: black;
+			width: 25%;
+		}
+		/* tbody tr:nth-child(2n){
+			background: rgb(238, 238, 238);
+		}
+		tfoot tr td{
+			border-top: 0;
+			height: 40px;
+		} */
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<p>用户名：</p>
+		<input type="text" placeholder=" 输入用户名" class="text" id="user">
+		<p>年 龄：</p>
+		<input type="text" placeholder=" 输入年龄" class="text" id="age"><br>
+		<input type="button" value="添加" class="btn" id="add">
+		<input type="button" value="重置" class="btn" id="rm">
+		<h2>用户信息表</h2>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<td>序号</td>
+					<td>名字</td>
+					<td>年龄</td>
+					<td>操作</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4"><input type="button" value="删除全部"></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<script src='jquery-3.1.1.min.js'></script>
+	<script>
+		$(function(){
+			$('#user, #age').on('focus',function(){
+				$(this).css('background','#FAFEC0');
+			}).on('blur',function(){
+				$(this).css('background','');
+			})
+
+			$('#add').on('click',function(){
+				var value=$('#user').val();
+				var age=$('#age').val();
+				var index=$('tbody tr:last').children().eq(0).html()*1;
+				index ? index +=1: index = 1;
+
+				if(value==''||age==''){
+					alert('请输入用户名或年龄');
+					return;
+				}
+				$('<tr><td>'+index+'</td><td>'+value+'</td><td>'+age+'</td><td><input type="button" value="删除"></td></tr>').appendTo('tbody');
+
+			})
+
+			$('tbody').on('click','input',function(){
+				$(this).parents('tr').remove();
+			})
+
+			$('tfoot').on('click', 'input', function(){
+				$('tbody').html('');
+			})
+
+			$('#rm').on('click',function(){
+				$('#user').val('');
+				$('#age').val('');
+			})
+		})
+	</script>
+</body>
+</html>
